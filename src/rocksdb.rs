@@ -38,6 +38,7 @@ use std::sync::Arc;
 use std::{fs, ptr, slice};
 use table_properties::TablePropertiesCollection;
 use util::is_power_of_two;
+use librocksdb_sys::DBMemoryAllocator;
 
 pub struct CFHandle {
     inner: *mut DBCFHandle,
@@ -2336,6 +2337,28 @@ impl Drop for Cache {
     fn drop(&mut self) {
         unsafe {
             crocksdb_ffi::crocksdb_cache_destroy(self.inner);
+        }
+    }
+}
+
+pub struct MemoryAllocator {
+    pub inner: *mut DBMemoryAllocator,
+}
+
+impl MemoryAllocator {
+    pub fn new_jemalloc_memory_allocator() -> MemoryAllocator {
+        unsafe {
+            MemoryAllocator {
+                inner: crocksdb_ffi::crocksdb_jemalloc_nodump_allocator_create(),
+            }
+        }
+    }
+}
+
+impl Drop for MemoryAllocator {
+    fn drop(&mut self) {
+        unsafe {
+            crocksdb_ffi::crocksdb_memory_allocator_destroy(self.inner);
         }
     }
 }

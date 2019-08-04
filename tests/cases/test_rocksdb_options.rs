@@ -25,6 +25,7 @@ use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
 use tempdir::TempDir;
+use rocksdb::rocksdb::MemoryAllocator;
 
 #[test]
 fn test_set_num_levels() {
@@ -319,14 +320,14 @@ fn test_set_lru_cache() {
 }
 
 #[test]
-fn test_set_no_dump_lru_cache() {
+fn test_set_jemalloc_nodump_allocator_for_lru_cache() {
     let path = TempDir::new("_rust_rocksdb_set_set_no_dump_lru_cache").expect("");
     let mut opts = DBOptions::new();
     let mut cf_opts = ColumnFamilyOptions::new();
     opts.create_if_missing(true);
     let mut block_opts = BlockBasedOptions::new();
     let mut cache_opts = LRUCacheOptions::new();
-    cache_opts.set_no_dump_allocator();
+    cache_opts.set_memory_allocator(MemoryAllocator::new_jemalloc_memory_allocator());
     cache_opts.set_capacity(8388608);
     block_opts.set_block_cache(&Cache::new_lru_cache(cache_opts));
     cf_opts.set_block_based_table_factory(&block_opts);
