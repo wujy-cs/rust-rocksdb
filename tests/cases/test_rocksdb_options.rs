@@ -15,6 +15,7 @@ use rocksdb::crocksdb_ffi::{
     CompactionPriority, DBCompressionType, DBInfoLogLevel as InfoLogLevel, DBRateLimiterMode,
     DBStatisticsHistogramType as HistogramType, DBStatisticsTickerType as TickerType,
 };
+use rocksdb::rocksdb::MemoryAllocator;
 use rocksdb::{
     BlockBasedOptions, Cache, ColumnFamilyOptions, CompactOptions, DBOptions, Env,
     FifoCompactionOptions, IndexType, LRUCacheOptions, ReadOptions, SeekKey, SliceTransform,
@@ -25,7 +26,6 @@ use std::sync::Arc;
 use std::thread;
 use std::time::Duration;
 use tempdir::TempDir;
-use rocksdb::rocksdb::MemoryAllocator;
 
 #[test]
 fn test_set_num_levels() {

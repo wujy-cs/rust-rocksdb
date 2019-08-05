@@ -18,6 +18,7 @@ use crocksdb_ffi::{
     DBWriteBatch,
 };
 use libc::{self, c_char, c_int, c_void, size_t};
+use librocksdb_sys::DBMemoryAllocator;
 use metadata::ColumnFamilyMetaData;
 use rocksdb_options::{
     CColumnFamilyDescriptor, ColumnFamilyDescriptor, ColumnFamilyOptions, CompactOptions,
@@ -38,7 +39,6 @@ use std::sync::Arc;
 use std::{fs, ptr, slice};
 use table_properties::TablePropertiesCollection;
 use util::is_power_of_two;
-use librocksdb_sys::DBMemoryAllocator;
 
 pub struct CFHandle {
     inner: *mut DBCFHandle,
