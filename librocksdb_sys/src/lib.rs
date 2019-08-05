@@ -364,7 +364,10 @@ extern "C" {
         opt: *mut DBLRUCacheOptions,
         high_pri_pool_ratio: c_double,
     );
-    pub fn crocksdb_lru_cache_options_set_memory_allocator(opt: *mut DBLRUCacheOptions, allocator: *mut DBMemoryAllocator);
+    pub fn crocksdb_lru_cache_options_set_memory_allocator(
+        opt: *mut DBLRUCacheOptions,
+        allocator: *mut DBMemoryAllocator,
+    );
     pub fn crocksdb_cache_create_lru(opt: *mut DBLRUCacheOptions) -> *mut DBCache;
     pub fn crocksdb_cache_destroy(cache: *mut DBCache);
 
