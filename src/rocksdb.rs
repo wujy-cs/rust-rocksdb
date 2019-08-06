@@ -2385,7 +2385,7 @@ impl MemoryAllocator {
     #[cfg(feature = "jemalloc")]
     pub fn new_jemalloc_memory_allocator() -> Result<MemoryAllocator, String> {
         unsafe {
-            let inner = ffi_try!(crocksdb_jemalloc_nodump_allocator_create(true));
+            let inner = ffi_try!(crocksdb_jemalloc_nodump_allocator_create());
             let allocator = MemoryAllocator {
                 inner
             };
