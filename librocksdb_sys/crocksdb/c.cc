@@ -3309,7 +3309,6 @@ void crocksdb_flushoptions_set_allow_write_stall(
 crocksdb_memory_allocator_t* crocksdb_jemalloc_nodump_allocator_create(char** errptr) {
   crocksdb_memory_allocator_t* allocator = new crocksdb_memory_allocator_t;
   rocksdb::JemallocAllocatorOptions options;
-  if(o)
   SaveError(errptr, rocksdb::NewJemallocNodumpAllocator(options, &allocator->rep));
   return allocator;
 }
